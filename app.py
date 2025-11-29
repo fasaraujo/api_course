@@ -3,7 +3,7 @@ from flask import Flask,jsonify
 app = Flask(__name__)
 
 purchase_orders = [
-    {"Id":1,
+    {"id":1,
      "Description": "PO-0001",
      "Item":[
                 {"item":1,
@@ -21,6 +21,12 @@ purchase_orders = [
 def get_purchase_orders():
     return jsonify(purchase_orders)
 
+@app.route('/purchase_orders/<int:id>')
+def get_purchase_by_id(id):
+    for po in purchase_orders:
+        if po['id'] == id:
+            return jsonify(po)
+    return jsonify({"Message":"Id {} Nao Encontrado".format(id)})
 
 @app.route("/")
 def home():
